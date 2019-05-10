@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "02bbab41-393b-4275-b467-2363d291976a",
+		"name": "digest-auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8787/api/public",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8787/api/public",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"api",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8787/api/private",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "disableRetryRequest",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "realm",
+							"value": "DigestRealmName",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						},
+						{
+							"key": "nonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "nonceCount",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientNonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "opaque",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "qop",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8787/api/private",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"api",
+						"private"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8787/api/admin",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "disableRetryRequest",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "realm",
+							"value": "DigestRealmName",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						},
+						{
+							"key": "nonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "nonceCount",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "clientNonce",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "opaque",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "qop",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8787/api/admin",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"api",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

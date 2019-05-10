@@ -1,0 +1,9 @@
+server:
+  port: 8787
+
+digestAuthConfigs:
+  realmName: DigestRealmName
+  secretKey: DigestSecretKey
+
+logging:
+  config: classpath:logback.xml

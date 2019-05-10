@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- Stop output INFO at start -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework" level="info" />
+    <!-- UniRest -->
+    <logger name="org.apache.http" level="info" />
+
+    <logger name="com.java.security" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+</configuration>
