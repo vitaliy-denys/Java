@@ -1,7 +1,7 @@
 # Authentication and Security
 
 <p align="center">
-	<img src="https://github.com/vitaliy-denys/Java/tree/master/authentication-and-security/blob/master/img/Spring-Security-Img.jpeg?raw=true" alt=""/>
+	<img src="https://github.com/vitaliy-denys/Java/blob/master/authentication-and-security/img/Spring-Security-Img.jpg?raw="true" alt=""/>
 </p>
 
 - [Spring Boot Basic Auth PoC](https://github.com/vitaliy-denys/Java/tree/master/authentication-and-security/spring-boot-basic-auth-poc)
