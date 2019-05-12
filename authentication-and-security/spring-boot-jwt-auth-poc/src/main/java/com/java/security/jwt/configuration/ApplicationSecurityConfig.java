@@ -1,18 +1,22 @@
-package com.java.security.digest.configuration;
+package com.java.security.jwt.configuration;
 
-import com.java.security.digest.properties.ApplicationProperties;
+import com.java.security.jwt.properties.ApplicationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.www.DigestAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER_ROLE = "USER";
     private static final String ADMIN_ROLE = "ADMIN";
@@ -26,23 +30,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilter(digestAuthenticationFilter())
-                .exceptionHandling()
-                .authenticationEntryPoint(digestEntryPoint())
-                .and()
-                .httpBasic()
-                .and()
+        http.cors().and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/public").permitAll()
                 .antMatchers("/api/private").hasRole(USER_ROLE)
                 .antMatchers("/api/admin").hasRole(ADMIN_ROLE)
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), applicationProperties))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), applicationProperties))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .csrf().disable();
-    }
-
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
     }
 
     @Override
@@ -53,17 +54,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password(passwordEncoder().encode("admin")).roles(ADMIN_ROLE, USER_ROLE);
     }
 
-    private DigestAuthenticationEntryPoint digestEntryPoint() {
-        DigestAuthenticationEntryPoint digestAuthenticationEntryPoint = new DigestAuthenticationEntryPoint();
-        digestAuthenticationEntryPoint.setRealmName(applicationProperties.getDigestAuthConfigs().getRealmName());
-        digestAuthenticationEntryPoint.setKey(applicationProperties.getDigestAuthConfigs().getSecretKey());
-        return digestAuthenticationEntryPoint;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
-    private DigestAuthenticationFilter digestAuthenticationFilter() throws Exception {
-        DigestAuthenticationFilter digestAuthenticationFilter = new DigestAuthenticationFilter();
-        digestAuthenticationFilter.setUserDetailsService(userDetailsServiceBean());
-        digestAuthenticationFilter.setAuthenticationEntryPoint(digestEntryPoint());
-        return digestAuthenticationFilter;
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
     }
 }
