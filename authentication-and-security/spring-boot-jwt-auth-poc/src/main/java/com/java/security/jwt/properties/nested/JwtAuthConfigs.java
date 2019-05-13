@@ -6,4 +6,5 @@ import lombok.Data;
 public class JwtAuthConfigs {
     private String authLoginUrl;
     private String jwtSecret;
+    private Long tokenExpirationTime;
 }

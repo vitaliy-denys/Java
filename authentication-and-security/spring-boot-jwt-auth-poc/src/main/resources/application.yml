@@ -5,6 +5,7 @@ jwtAuthConfigs:
   authLoginUrl: /api/authentication
 #  // Signing key for HS512 algorithm
   jwtSecret: n2r5u8x/A%D*G-KaPdSgVkYp3s6v9y$B&E(H+MbQeThWmZq4t7w!z%C*F-J@NcRf
+  tokenExpirationTime: 864000000
 
 logging:
   config: classpath:logback.xml

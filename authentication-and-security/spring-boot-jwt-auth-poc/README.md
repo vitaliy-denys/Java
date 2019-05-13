@@ -9,3 +9,12 @@ For example, as an URL parameter or in HTTP Authorization header using the Beare
 ```sh
 Authorization: Bearer <token string>
 ```
+
+#### Main Components:
+**JwtAuthenticationFilter** will be used directly for user authentication. It’ll check for username and password parameters 
+from URL and calls Spring’s authentication manager to verify them.
+If username and password is correct, then filter will create a JWT token and returns it in HTTP Authorization header.
+
+**JwtAuthorizationFilter** handles all HTTP requests and checks if there is an Authorization header with correct token. 
+For example, if token is not expired or if signature key is correct.
+If the token is valid then filter will add authentication data into Spring’s security context.
